@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - main
+  pg:
+    container_name: pg
+    image: postgres:latest
+    volumes:
+      - "./.database/postgres:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=somepass
+
+networks:
+  main: { }
