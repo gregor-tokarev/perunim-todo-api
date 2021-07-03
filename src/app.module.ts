@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeormConfig } from './config/typeorm.config';
 import { AuthModule } from './app/auth/auth.module';
@@ -11,9 +11,12 @@ import { TodoModule } from './app/todo/todo.module';
     ConfigModule.forRoot({
       envFilePath: [`.env.${process.env.NODE_ENV}`],
       isGlobal: true,
-      load: [TypeormConfig],
     }),
-    TypeOrmModule.forRoot(TypeormConfig()),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: TypeormConfig,
+      inject: [ConfigService],
+    }),
     AuthModule,
     UserModule,
     TodoModule,

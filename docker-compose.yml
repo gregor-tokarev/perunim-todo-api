@@ -2,13 +2,13 @@ version: "3.3"
 
 services:
   app:
+    env_file:
+      - .env.production
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    networks:
-      - main
   pg:
     container_name: pg
     image: postgres:latest
@@ -21,5 +21,5 @@ services:
       - POSTGRES_USER=app
       - POSTGRES_PASSWORD=somepass
 
-networks:
-  main: { }
+#networks:
+#  main: { }
