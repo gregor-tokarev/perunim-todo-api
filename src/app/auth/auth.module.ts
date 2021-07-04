@@ -29,5 +29,4 @@ import { UserModule } from '../user/user.module';
   ],
   exports: [JwtStrategy, PassportModule],
 })
-export class AuthModule {
-}
+export class AuthModule {}

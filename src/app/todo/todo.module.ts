@@ -8,10 +8,6 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   controllers: [TodoController],
   providers: [TodoService],
-  imports: [
-    AuthModule,
-    TypeOrmModule.forFeature([TodoRepository]),
-  ],
+  imports: [AuthModule, TypeOrmModule.forFeature([TodoRepository])],
 })
-export class TodoModule {
-}
+export class TodoModule {}

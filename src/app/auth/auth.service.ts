@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from '../user/repositories/user.repository';
 import { CreateUserDto } from '../user/dto/create-user.dto';
@@ -13,8 +13,7 @@ export class AuthService {
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
     private jwtService: JwtService,
-  ) {
-  }
+  ) {}
 
   async signupUserWithEmail(
     createUserDto: CreateUserDto,
@@ -29,9 +28,14 @@ export class AuthService {
   async authUserWithGoogle(
     googleResponseDto: OauthResponseDto,
   ): Promise<AuthResponse> {
-    const existingUser = await this.userRepository.findOne({ email: googleResponseDto.email, authMethod: 'google' });
+    const existingUser = await this.userRepository.findOne({
+      email: googleResponseDto.email,
+      authMethod: 'google',
+    });
     if (existingUser) {
-      const accessToken = await this.generateAccessToken({ email: existingUser.email });
+      const accessToken = await this.generateAccessToken({
+        email: existingUser.email,
+      });
       return { accessToken };
     }
 
@@ -52,12 +56,17 @@ export class AuthService {
     });
     console.log(existingUser);
     if (existingUser) {
-      const accessToken = await this.generateAccessToken({ email: existingUser.email });
+      const accessToken = await this.generateAccessToken({
+        email: existingUser.email,
+      });
       return { accessToken };
     }
     const user = await this.userRepository.createUser(
       { email: facebookResponseDto.email },
-      { type: 'facebook', facebookAccessToken: facebookResponseDto.accessToken },
+      {
+        type: 'facebook',
+        facebookAccessToken: facebookResponseDto.accessToken,
+      },
     );
     const accessToken = await this.generateAccessToken({ email: user.email });
     return { accessToken };

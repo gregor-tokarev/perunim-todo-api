@@ -22,5 +22,4 @@ import { TodoModule } from './app/todo/todo.module';
     TodoModule,
   ],
 })
-export class AppModule {
-}
+export class AppModule {}

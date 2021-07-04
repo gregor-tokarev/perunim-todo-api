@@ -7,13 +7,11 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import config from '../../../config/default';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  constructor(
-    private configService: ConfigService,
-  ) {
+  constructor() {
     super();
   }
 
@@ -28,7 +26,7 @@ export class UserRepository extends Repository<User> {
     if (authMethod.type === 'email') {
       const hashedPassword = await hash(
         createUserDto.password,
-        this.configService.get('JWT_SECRET'),
+        config.hashSalt,
       );
       user.password = hashedPassword;
       user.setDefaultAvatar();
