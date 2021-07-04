@@ -88,9 +88,4 @@ export class TodoController {
   ) {
     return this.todoService.changeTodoPlan(id, user, order, date);
   }
-
-  @Get('joke')
-  sendJoke() {
-    return 'joke'
-  }
 }
