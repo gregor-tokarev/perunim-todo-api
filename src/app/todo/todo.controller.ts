@@ -5,8 +5,6 @@ import {
   Body,
   Param,
   Delete,
-  UsePipes,
-  ValidationPipe,
   UseGuards,
   Patch, Put, ParseIntPipe,
 } from '@nestjs/common';
@@ -89,5 +87,10 @@ export class TodoController {
     @Body('order', ParseIntPipe) order: number,
   ) {
     return this.todoService.changeTodoPlan(id, user, order, date);
+  }
+
+  @Get('joke')
+  sendJoke() {
+    return 'joke'
   }
 }
